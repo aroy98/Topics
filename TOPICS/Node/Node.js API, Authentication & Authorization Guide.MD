@@ -65,19 +65,26 @@ app.delete('/api/users/:id', (req, res) => {
 
 ---
 
-## **2. HTTP Status Codes Explained**
+## **2. HTTP Status Codes (Extended for Payment APIs)**
 
-Each HTTP response includes a status code that indicates the result of the request.
-
-| Code                          | Meaning               | Example Scenario                          |
-| ----------------------------- | --------------------- | ----------------------------------------- |
-| **200 OK**                    | Request succeeded     | Data retrieved successfully               |
-| **201 Created**               | New record created    | A user was added                          |
-| **400 Bad Request**           | Invalid input         | Missing required field                    |
-| **401 Unauthorized**          | Authentication failed | Missing JWT token                         |
-| **403 Forbidden**             | Access denied         | Regular user trying to access admin route |
-| **404 Not Found**             | Resource missing      | User ID doesn’t exist                     |
-| **500 Internal Server Error** | Server crashed        | Exception not handled                     |
+| Code                          | Meaning                       | Description                                                        |
+| ----------------------------- | ----------------------------- | ------------------------------------------------------------------ |
+| **200 OK**                    | Success                       | Request completed successfully                                     |
+| **201 Created**               | Resource Created              | Returned after successful creation                                 |
+| **202 Accepted**              | Processing                    | Request accepted but not yet completed (e.g., payment in progress) |
+| **204 No Content**            | Success with no response body | Common for DELETE requests                                         |
+| **400 Bad Request**           | Invalid input                 | Request malformed or missing fields                                |
+| **401 Unauthorized**          | Authentication required       | Missing or invalid credentials                                     |
+| **402 Payment Required**      | Payment Failed                | Payment declined or insufficient funds                             |
+| **403 Forbidden**             | Access denied                 | User doesn’t have permission                                       |
+| **404 Not Found**             | Resource not found            | Invalid route or resource ID                                       |
+| **409 Conflict**              | Duplicate data                | Used in registration or insert conflicts                           |
+| **422 Unprocessable Entity**  | Invalid Transaction           | Payment validation or data format error                            |
+| **429 Too Many Requests**     | Rate Limited                  | API rate limit exceeded                                            |
+| **500 Internal Server Error** | Server crash or exception     | Unhandled server-side error                                        |
+| **502 Bad Gateway**           | Upstream Error                | Payment gateway or third-party API error                           |
+| **503 Service Unavailable**   | Temporary Outage              | Payment service temporarily down                                   |
+| **504 Gateway Timeout**       | Gateway Timeout               | Payment processor didn’t respond in time                           |
 
 Example:
 
